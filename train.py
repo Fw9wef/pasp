@@ -149,6 +149,8 @@ def train(train_loader, model, criterion, optimizer, num_iter):
 
         # Loss
         loss = criterion(pred, target)  # scalar
+        print(pred)
+        print(target)
         print(loss)
 
         # Backward prop.
