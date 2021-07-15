@@ -1,5 +1,6 @@
 import os
 
+import numpy as np
 import torch.optim
 import torch.utils.data
 import torch.backends.cudnn as cudnn
@@ -51,6 +52,7 @@ def main():
     Training and validation.
     """
     global checkpoint, min_f1
+    min_loss = np.inf
 
     model = MRZdetector()
 
@@ -119,7 +121,7 @@ def main():
         e_loss = loss.mean()
 
         # Did validation f1 improve?
-        if e_loss > min_loss:
+        if e_loss < min_loss:
             print("Saving model ...")
             min_loss = e_loss
             torch.save(model.state_dict(), os.path.join(save_folder, f"BEST.pth"))
