@@ -137,7 +137,7 @@ class AuxiliaryConvolutions(nn.Module):
         self.conv9_1 = nn.Conv2d(512, 128, kernel_size=1, padding=0)
         self.conv9_2 = nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1)  # dim. reduction because stride > 1
         self.pool = nn.MaxPool2d(5)
-        self.pred_layer = nn.Sequential(nn.Linear(256, 256), nn.ReLU(), nn.Linear(256, 256))
+        self.pred_layer = nn.Sequential(nn.Linear(256, 256), nn.ReLU(), nn.Linear(256, 6))
         # Initialize convolutions' parameters
         self.init_conv2d()
 
@@ -189,6 +189,5 @@ class MRZdetector(nn.Module):
         conv7_feats = self.base(image)  # (N, 1024, 19, 19)
 
         # Run auxiliary convolutions (higher level feature map generators)
-        pred_xywh, pred_sc = self.aux_convs(conv7_feats)  # (N, 512, 10, 10),  (N, 256, 5, 5)
-        print(pred_xywh.shape, pred_sc.shape)
+        pred_xywh, pred_sc = self.aux_convs(conv7_feats)  # (N, 256, 5, 5)
         return torch.cat([pred_xywh, pred_sc], dim=-1)
