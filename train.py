@@ -39,7 +39,7 @@ grad_clip = None
 lr = 0.5e-3  # learning rate
 momentum = 0.9  # momentum
 weight_decay = 5e-5  # weight decay
-opt = 'adam'  # optimizer
+opt = 'sgd'  # optimizer
 
 # Initiate logger
 logger = Logger(log_folder)

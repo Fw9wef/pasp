@@ -57,8 +57,8 @@ def evaluate(model, test_loader):
             gt_cos = target[:, 6].view(-1).detach().to('cpu').numpy()
 
             gt_xywh = target[:, :4].detach().to('cpu').numpy()
-            gt_sc = target[:, -3:-1].detach().to('cpu').numpy()
-            gt = np.concatenate([gt_xywh, gt_sc], axis=-1)
+            #gt_sc = target[:, -3:-1].detach().to('cpu').numpy()
+            #gt = np.concatenate([gt_xywh, gt_sc], axis=-1)
 
             # Forward prop.
             pred = model(images)
@@ -67,7 +67,7 @@ def evaluate(model, test_loader):
             pred_angle = get_angle(pred_sin, pred_cos)
 
             pred = pred.detach().to('cpu').numpy()
-            mse = np.sum(np.sqrt(np.sum((gt-pred)**2, axis=-1)))
+            mse = np.sum(np.sqrt(np.sum((gt_xywh-pred[:4])**2, axis=-1)))
 
             n += int(gt_sin.shape[0])
             sae_sin += np.sum(np.abs(gt_sin - pred_sin))
