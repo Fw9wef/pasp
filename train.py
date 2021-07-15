@@ -22,12 +22,12 @@ os.makedirs(save_folder, exist_ok=True)
 # Model parameters
 # Learning parameters
 checkpoint = None  # path to model checkpoint("./best/52.pth.tar" ), None if none
-batch_size = 32  # batch size
+batch_size = 64  # batch size
 start_epoch = 0  # start at this epoch
 epochs = 100  # number of epochs to run without early-stopping
 epochs_since_improvement = 0  # number of epochs since there was an improvement in the validation metric
 min_f1 = 0.6  # min avg value f1 on test sample for saving model
-workers = 8  # number of workers for loading data in the DataLoader
+workers = 24  # number of workers for loading data in the DataLoader
 # Show result
 print_ascii_table = True
 adjust_lr_flag = True
