@@ -26,12 +26,8 @@ class ListDataset(Dataset):
 
         # Read data files
         data = pd.read_csv(os.path.join(data_folder, f"{self.split}_annotation.csv"))
-        #if self.split=='TEST':
-        #    data = pd.read_csv(os.path.join(data_folder, "a4_final_TEST_annotation.csv"))#.sample(3000)
         df = pd.DataFrame(data)
-        #
         self.countries = list(set(df["MRZ КОД СТРАНЫ"].tolist()))
-        #
         self.df = df.copy()
         self.df_cur = self.df
 
@@ -58,33 +54,6 @@ class ListDataset(Dataset):
 
     def __len__(self):
         return len(self.df_cur.index)
-    
-    def collate_fn(self, batch):
-        """
-        Since each image may have a different number of objects, we need a collate function (to be passed to the DataLoader).
-
-        This describes how to combine these tensors of different sizes.
-
-        Note: this need not be defined in this Class, can be standalone.
-
-        :param batch: an iterable of N sets from __getitem__()
-        :return: a tensor of images, tensors of varying-size containing coordinates bounding boxes and labels
-        """
-
-        images = list()
-        box8points = list()
-        target = list()
-
-        for b in batch:
-            images.append(b[0])
-            box8points.append(b[1])
-            target.append(b[2])
-
-        images = torch.stack(images, dim=0)
-        boxes = torch.stack(box8points, dim=0)
-        target = torch.stack(target, dim=0)
-
-        return images, boxes, target  # tensor(N, 3, 300, 300), tensor(N,1,8),tensor(N,1,8)
 
     def select_train_data(self):
 
