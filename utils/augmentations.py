@@ -109,7 +109,7 @@ def transform(path2img, box, angle, orient, split, cut=False):
     mean = [0.485, 0.456, 0.406]
     std = [0.229, 0.224, 0.225]
     img = cv2.imread(path2img)
-    box = align_box(img, angle - orient, box)
+    #box = align_box(img, angle - orient, box)
     x1, y1, x2, y2, x3, y3, x4, y4 = box
     
     #fist - resize initial image to reduce computational costs
