@@ -190,5 +190,5 @@ class MRZdetector(nn.Module):
 
         # Run auxiliary convolutions (higher level feature map generators)
         pred_xywh, pred_sc = self.aux_convs(conv7_feats)  # (N, 512, 10, 10),  (N, 256, 5, 5)
-
+        print(pred_xywh.shape, pred_sc.shape)
         return torch.cat([pred_xywh, pred_sc], dim=-1)
