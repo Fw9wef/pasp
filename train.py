@@ -15,7 +15,7 @@ from utils.utils import adjust_learning_rate, clip_gradient, rev_label_map, devi
 from tqdm import tqdm
 
 # Data parameters
-save_folder = "./checkpoints"
+save_folder = "./checkpoints_adam"
 data_folder = "./annotation"  # folder with data files
 log_folder = "logs"
 os.makedirs(save_folder, exist_ok=True)
@@ -25,7 +25,7 @@ os.makedirs(save_folder, exist_ok=True)
 checkpoint = None  # path to model checkpoint("./best/52.pth.tar" ), None if none
 batch_size = 32  # batch size
 start_epoch = 0  # start at this epoch
-epochs = 100  # number of epochs to run without early-stopping
+epochs = 200  # number of epochs to run without early-stopping
 epochs_since_improvement = 0  # number of epochs since there was an improvement in the validation metric
 min_f1 = 0.6  # min avg value f1 on test sample for saving model
 workers = 16  # number of workers for loading data in the DataLoader
@@ -39,7 +39,7 @@ grad_clip = None
 lr = 0.5e-3  # learning rate
 momentum = 0.9  # momentum
 weight_decay = 5e-5  # weight decay
-opt = 'sgd'  # optimizer
+opt = 'adam'  # optimizer
 
 # Initiate logger
 logger = Logger(log_folder)
