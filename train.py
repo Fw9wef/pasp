@@ -136,13 +136,17 @@ def train(train_loader, model, criterion, optimizer, num_iter):
         num_iter += 1
         # Move to default device
         images = images.to(device)  # (batch_size (N), 3, 300, 300)
+
+        gt_xywh = target[:, :4]
+        gt_sc = target[:, -3:-1]
+        target = torch.cat([gt_xywh, gt_sc], dim=-1)
         target = target.to(device)
 
         # Forward prop.
-        predicted_locs, predicted_scores = model(images)  # (N, 8732, 4), (N, 8732, n_classes)
+        pred = model(images)  # (N, 8732, 4), (N, 8732, n_classes)
 
         # Loss
-        loss = criterion(predicted_locs, predicted_scores, target)  # scalar
+        loss = criterion(pred, target)  # scalar
 
         # Backward prop.
         optimizer.zero_grad()

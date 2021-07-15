@@ -57,7 +57,7 @@ def evaluate(model, test_loader):
             gt_cos = target[:, 6].view(-1).detach().to('cpu').numpy()
 
             gt_xywh = target[:, :4].detach().to('cpu').numpy()
-            gt_sc = target[:, -2:].detach().to('cpu').numpy()
+            gt_sc = target[:, -3:-1].detach().to('cpu').numpy()
             gt = np.concatenate([gt_xywh, gt_sc], axis=-1)
 
             # Forward prop.

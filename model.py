@@ -162,7 +162,7 @@ class AuxiliaryConvolutions(nn.Module):
         out = F.relu(self.conv9_2(out))  # (N, 256, 5, 5)
         out = self.pool(out).squeeze(-1).squeeze(-1)
         out = self.pred_layer(out)
-        out = F.tanh(out)
+        out = torch.tanh(out)
         pred_xywh = (out[:, :4] + 1) / 2
         pred_sc = out[:, 4:]
         return pred_xywh, pred_sc
