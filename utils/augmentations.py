@@ -131,7 +131,7 @@ def transform(path2img, box, angle, orient, split, cut=False):
     x1, y1, x2, y2, x3, y3, x4, y4, cx, cy, w, h = box
     image = Image.fromarray(img[:, :, ::-1].astype(np.uint8))
     box8points = torch.FloatTensor([x1, y1, x2, y2, x3, y3, x4, y4])
-    target = torch.FloatTensor([cx, cy, w, h, 0, 0, 0, 1])
+    target = torch.FloatTensor([cx/300, cy/300, w/300, h/300, 0, 0, 0, 1])
     
     #if split == 'TRAIN':
     #    image = photometric_distort(image)
