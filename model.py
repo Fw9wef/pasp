@@ -2,7 +2,7 @@ import torch
 import torchvision
 import torch.nn.functional as F
 from torch import nn
-from .utils.utils import decimate, cxcy_to_gcxgcy, find_io_rotated_boxes, nms, gcxgcy_to_cxcy, device
+from utils.utils import decimate, cxcy_to_gcxgcy, find_io_rotated_boxes, nms, gcxgcy_to_cxcy, device
 
 
 class VGGBase(nn.Module):

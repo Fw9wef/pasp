@@ -5,8 +5,8 @@ from math import asin, acos
 
 from tqdm import tqdm
 
-from .utils.utils import device
-from .utils.datasets import ListDataset
+from utils.utils import device
+from utils.datasets import ListDataset
 
 # Parameters
 best_checkpoint = './checkpoints/91.pth'

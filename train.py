@@ -7,9 +7,9 @@ import torch.backends.cudnn as cudnn
 from model import MRZdetector
 from eval import evaluate
 
-from .utils.logger import Logger
-from .utils.datasets import ListDataset
-from .utils.utils import adjust_learning_rate, clip_gradient, rev_label_map, device, show_metrics
+from utils.logger import Logger
+from utils.datasets import ListDataset
+from utils.utils import adjust_learning_rate, clip_gradient, rev_label_map, device, show_metrics
 
 from tqdm import tqdm
 

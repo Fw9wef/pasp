@@ -1,6 +1,6 @@
 import torch
 
-from .utils.utils import find_io, convert2degree, label_names
+from utils.utils import find_io, convert2degree, label_names
 
 
 def get_confusion_matrix(predict_boxes, predict_labels, boxes, labels, angles, iou_threshold=0.5, angle_threshold=5.):
