@@ -5,7 +5,7 @@ import torch.optim
 import torch.utils.data
 import torch.backends.cudnn as cudnn
 
-from model import MRZdetector
+from pasp_model import MRZdetector
 from eval import evaluate
 
 from utils.logger import Logger

@@ -115,6 +115,6 @@ def main():
     print("Test loss: ", e_loss)
 
 if __name__ == '__main__':
-    from model import MRZdetector
+    from pasp_model import MRZdetector
 
     main()
