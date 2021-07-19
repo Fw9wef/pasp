@@ -221,12 +221,12 @@ def get_mrz(original_image, angle, box, pasp_mode=False):
         h_box = orig_h-1
     half_w_box, half_h_box = int(w_box/2), int(h_box/2)
     
-    pasp_h = int(w_box / pasp_ratio - half_h_box)
+    #pasp_h = int(w_box / pasp_ratio - half_h_box)
     
-    if pasp_mode:
-        mrz = rotated_img[cy-pasp_h:cy+half_h_box, cx-half_w_box:cx+half_w_box]
-    else:
-        mrz = rotated_img[cy-half_h_box:cy+half_h_box, cx-half_w_box:cx+half_w_box]
+    #if pasp_mode:
+    #    mrz = rotated_img[cy-pasp_h:cy+half_h_box, cx-half_w_box:cx+half_w_box]
+    #else:
+    mrz = rotated_img[cy-half_h_box:cy+half_h_box, cx-half_w_box:cx+half_w_box]
     
     #import matplotlib.pyplot as plt
     #print(half_w_box, half_h_box)
