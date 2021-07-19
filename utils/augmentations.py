@@ -294,8 +294,8 @@ def crop(img, size=(30, 60), n_crops=4):
 
 def get_cxcywh(box):
     x1, y1, x2, y2, x3, y3, x4, y4 = box
-    cx1, cy1 = np.array([x1,y1]) + np.array([x3-x1,y3-y1])/2
-    cx2, cy2 = np.array([x2,y2]) + np.array([x4-x2,y4-y2])/2
+    cx1, cy1 = np.array([x1,y1]) + np.array([x3-x1, y3-y1])/2
+    cx2, cy2 = np.array([x2,y2]) + np.array([x4-x2, y4-y2])/2
     cx, cy = np.mean([cx1, cx2]), np.mean([cy1, cy2])
     w = np.mean([np.linalg.norm([x1-x2, y1-y2]), np.linalg.norm([x3-x4, y3-y4])])
     h = np.mean([np.linalg.norm([x1-x3, y1-y3]), np.linalg.norm([x2-x4, y2-y4])])

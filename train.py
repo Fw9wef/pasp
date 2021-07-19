@@ -15,7 +15,7 @@ from utils.utils import adjust_learning_rate, clip_gradient, rev_label_map, devi
 from tqdm import tqdm
 
 # Data parameters
-save_folder = "./checkpoints_adam"
+save_folder = "./checkpoints"
 data_folder = "./annotation"  # folder with data files
 log_folder = "logs"
 os.makedirs(save_folder, exist_ok=True)
