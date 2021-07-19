@@ -184,6 +184,7 @@ def detect(original_image, pasp_model, mrz_model, min_score=0.2, max_overlap=0, 
     delta_angle = get_delta_angle(mrz)
     angle = angle+delta_angle
 
+    print(pasp_box)
     mrz = get_mrz(original_image, angle, pasp_box, pasp_mode=True)
     return mrz
 
