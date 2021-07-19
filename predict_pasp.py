@@ -6,6 +6,7 @@ import numpy as np
 from torchvision import transforms
 from PIL import Image
 import cv2
+import matplotlib.pyplot as plt
 
 from mrz_model import MRZdetector
 from pasp_model import MRZdetector as PaspDetector
@@ -15,7 +16,8 @@ wr_path = './a4_final_test_output'
 os.makedirs(wr_path, exist_ok=True)
 data_folder = './annotation'
 
-def load_models(mrz_checkpoint = './mrz_lib/mrz_model.pth', pasp_checkpoint = './mrz_lib/pasp_model.pth'):
+
+def load_models(mrz_checkpoint='./mrz_lib/mrz_model.pth', pasp_checkpoint='./mrz_lib/pasp_model.pth'):
     pasp_checkpoint = torch.load(pasp_checkpoint)
     pasp_model = PaspDetector()
     pasp_model.load_state_dict(pasp_checkpoint)
@@ -51,7 +53,7 @@ def calc_energy(img):
 
 def value_binarization(img, threshold=120):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-    value_map = img[:,:,2]
+    value_map = img[:, :, 2]
     otsu_threshold, image_result = cv2.threshold(value_map, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     return 255 - image_result
 
@@ -60,7 +62,7 @@ def rotate(img, angle):
     h, w = img.shape[:2]
     center = w / 2, h / 2
     rotation_mat = cv2.getRotationMatrix2D(center, angle, 1)
-    img = cv2.warpAffine(img, rotation_mat, (w,h))#, borderValue=[255,255,255])
+    img = cv2.warpAffine(img, rotation_mat, (w, h))  # , borderValue=[255,255,255])
     return img
 
 
@@ -95,13 +97,13 @@ def get_delta_angle(img):
     base_enrgy = calc_energy(img)
     
     delta_angle = 0
-    for max_angle, delta in zip([10,2],[2,0.25]):
+    for max_angle, delta in zip([10, 2], [2, 0.25]):
         delta_angle += get_best_angle_in_range(img, max_angle, delta, delta_angle, base_enrgy)
     
     return delta_angle
 
 
-def resize_angle(angle, orig_w, orig_h, curr_w = 300, curr_h = 300):
+def resize_angle(angle, orig_w, orig_h, curr_w=300, curr_h=300):
     if angle > 270:
         const_angle = 270
         angle -= 270
@@ -199,6 +201,7 @@ def get_mrz(original_image, angle, box, pasp_mode=False):
     rotation_mat[0, 2] += (w / 2) - center[0]
     rotation_mat[1, 2] += (h / 2) - center[1]
     rotated_img = cv2.warpAffine(np.array(original_image), rotation_mat, (w, h), borderMode=cv2.BORDER_REPLICATE)
+    plt.imshow(rotated_img)
     cx, cy = int(w/2), int(h/2)
     
     rot_h, rot_w = rotated_img.shape[:2]
@@ -214,27 +217,14 @@ def get_mrz(original_image, angle, box, pasp_mode=False):
         res_angle = angle
     
     w_box = w_box*np.sqrt((np.sin(np.deg2rad(res_angle))*ratio_h)**2 + (np.cos(np.deg2rad(res_angle))*ratio_w)**2)
-    if w_box>=orig_w:
+    if w_box >= orig_w:
         w_box = orig_w-1
     h_box = h_box*np.sqrt((np.cos(np.deg2rad(res_angle))*ratio_h)**2 + (np.sin(np.deg2rad(res_angle))*ratio_w)**2)
-    if h_box>=orig_h:
+    if h_box >= orig_h:
         h_box = orig_h-1
     half_w_box, half_h_box = int(w_box/2), int(h_box/2)
-    
-    #pasp_h = int(w_box / pasp_ratio - half_h_box)
-    
-    #if pasp_mode:
-    #    mrz = rotated_img[cy-pasp_h:cy+half_h_box, cx-half_w_box:cx+half_w_box]
-    #else:
+
     mrz = rotated_img[cy-half_h_box:cy+half_h_box, cx-half_w_box:cx+half_w_box]
-    
-    #import matplotlib.pyplot as plt
-    #print(half_w_box, half_h_box)
-    #fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(18,18))
-    #ax1.imshow(original_image)
-    #ax2.imshow(rotated_img)
-    #ax3.imshow(mrz)
-    
     return mrz
 
 
