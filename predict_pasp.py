@@ -175,7 +175,7 @@ def detect(original_image, pasp_model, mrz_model, min_score=0.2, max_overlap=0, 
     angle = -angle
     
     box = [cx, cy, w, h, orig_w, orig_h]
-    pasp_box = pasp_locs[:4] + [orig_w, orig_h]
+    pasp_box = pasp_locs[0][:4] + [orig_w, orig_h]
     
     mrz = get_mrz(original_image, angle, box)
     
