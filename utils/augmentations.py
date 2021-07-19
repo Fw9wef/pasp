@@ -298,7 +298,7 @@ def get_cxcywh(box):
     cx2, cy2 = np.array([x2,y2]) + np.array([x4-x2,y4-y2])/2
     cx, cy = np.mean([cx1, cx2]), np.mean([cy1, cy2])
     w = np.mean([np.linalg.norm([x1-x2, y1-y2]), np.linalg.norm([x3-x4, y3-y4])])
-    h = np.mean([np.linalg.norm([x1-x4, y1-y4]), np.linalg.norm([x2-x3, y2-y3])])
+    h = np.mean([np.linalg.norm([x1-x3, y1-y3]), np.linalg.norm([x2-x4, y2-y4])])
     return [cx, cy, w, h]
 
 
@@ -313,8 +313,8 @@ def random_rotation(obj_img, box):
     x1, y1, x2, y2, x3, y3, x4, y4 = box
     rotated_img = rotated_img[y_bnd_top:y_bnd_bot, x_bnd_left:x_bnd_right]
     obj_mask = obj_mask[y_bnd_top:y_bnd_bot, x_bnd_left:x_bnd_right]
-    x1, x2, x3, x4 = [ x - x_bnd_left for x in [x1, x2, x3, x4]]
-    y1, y2, y3, y4 = [ y - y_bnd_top for y in [y1, y2, y3, y4]]
+    x1, x2, x3, x4 = [x - x_bnd_left for x in [x1, x2, x3, x4]]
+    y1, y2, y3, y4 = [y - y_bnd_top for y in [y1, y2, y3, y4]]
     new_box = [x1, y1, x2, y2, x3, y3, x4, y4]
     return rotated_img, obj_mask, new_box
 
@@ -323,8 +323,8 @@ def resize_obj_img(obj_img, new_wh, box):
     x_compress, y_compress = new_wh[0]/obj_img.shape[1], new_wh[1]/obj_img.shape[0]
     x1, y1, x2, y2, x3, y3, x4, y4 = box
     obj_img = cv2.resize(obj_img, new_wh, cv2.INTER_CUBIC)
-    x1, x2, x3, x4 = [ np.round(int(x*x_compress)) for x in [x1, x2, x3, x4]]
-    y1, y2, y3, y4 = [ np.round(int(y*y_compress)) for y in [y1, y2, y3, y4]]
+    x1, x2, x3, x4 = [np.round(int(x*x_compress)) for x in [x1, x2, x3, x4]]
+    y1, y2, y3, y4 = [np.round(int(y*y_compress)) for y in [y1, y2, y3, y4]]
     new_box = [x1, y1, x2, y2, x3, y3, x4, y4]
     return obj_img, new_box
 
